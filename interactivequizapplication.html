@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #0f209f;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .quiz-container {
+            max-width: 600px;
+            width: 100%;
+            background-color: rgb(23, 175, 221);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(25, 25, 25, 0.978);
+        }
+        .question {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+        }
+        .option {
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+    <title>Web Technology Quiz</title>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Web Technology Quiz</h1>
+        <div id="question-container"></div>
+        <div id="options-container" class="options"></div>
+        <button onclick="nextQuestion()">Next Question</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        const questions = [
+            {
+                question: "What does HTML stand for?",
+                options: ["a) Hyper Text Markup Language", "b) Hyperlinks and Text Markup Language", "c) Home Tool Markup Language", "d) Hyper Transfer Markup Language"],
+                correctAnswer: 0
+            },
+            {
+                question: "Which of the following is not an HTML tag?",
+                options: ["a) select","b) input","c) textarea","d) list "],
+                correctAnswer: 3
+            },
+            {
+                question: "Which among these is not a Web browser?",
+                options: ["a) www","b) Chrome","c) Opera","d) NetSurf"],
+                correctAnswer: 0
+            },
+            {
+                question: "World Wide Web was invented by?",
+                options: ["a) Ted Nelson","b) Tim Berners-Lee","c) Linus Torvalds","d) Robert E. Kahn"],
+                correctAnswer: 1
+            },
+            {
+                question: "What does W3C stand for?",
+                options: ["a) World Wide Web Consortium","b) World Wide Website Consortium","c) World Wide Website Community","d) World Wide Web Community"],
+                correctAnswer: 0
+            },
+            {
+                question: "Which one among these is used with tag as an attribute to specify alternate text for an image, if the image is not displayed for some reason?",
+                options: ["a) alt","b) Alternate","c) Duplicate","d) Auxiliary"],
+                correctAnswer: 0
+            },
+            {
+                question: "Which among the following options is correct regarding HTML?",
+                options: ["a) Modelling Language","b) DTP language","c) Partial programming language","d) Used to structure web documents"],
+                correctAnswer: 3
+            },
+            {
+                question: "XML stands for?",
+                options: ["a) Extensible Mask Language","b) Extensible Markup Language","c) Extended Markup Language","d) Extension Markup Language"],
+                correctAnswer: 1
+            },
+            {
+                question: "Which programming language is known as the 'language of the web'?",
+                options: ["a) Java", "b) Python", "c) JavaScript", "d) C++"],
+                correctAnswer: 2
+            },
+            {
+                question: "What is the purpose of CSS?",
+                options: ["a) To create web pages", "b) To style the HTML content", "c) To perform calculations", "d) To handle server-side logic"],
+                correctAnswer: 1
+            },
+        ];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        function startQuiz() {
+            showQuestion();
+        }
+        function showQuestion() {
+            const questionContainer = document.getElementById("question-container");
+            const optionsContainer = document.getElementById("options-container");
+            const resultContainer = document.getElementById("result");
+            if (currentQuestionIndex < questions.length) {
+                const currentQuestion = questions[currentQuestionIndex];
+                questionContainer.textContent = `Question ${currentQuestionIndex + 1}: ${currentQuestion.question}`;
+                optionsContainer.innerHTML = "";
+                currentQuestion.options.forEach((option, index) => {
+                    const optionElement = document.createElement("div");
+                    optionElement.classList.add("option");
+                    optionElement.textContent = option;
+                    optionElement.addEventListener("click", () => checkAnswer(index));
+                    optionsContainer.appendChild(optionElement);
+                });
+                resultContainer.textContent = "";
+            } else {
+                endQuiz();
+            }
+        }
+        function checkAnswer(selectedIndex) {
+            const currentQuestion = questions[currentQuestionIndex];
+            if (selectedIndex === currentQuestion.correctAnswer) {
+                score++;
+            }
+            currentQuestionIndex++;
+            showQuestion();
+        }
+        function endQuiz() {
+            const questionContainer = document.getElementById("question-container");
+            const optionsContainer = document.getElementById("options-container");
+            const resultContainer = document.getElementById("result");
+            questionContainer.textContent = "Quiz Completed";
+            optionsContainer.innerHTML = "";
+            resultContainer.textContent = `Your Score: ${score} out of ${questions.length}`;
+        }
+        function nextQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                showQuestion();
+            }
+        }
+        startQuiz();
+    </script>
+</body>
+</html>
